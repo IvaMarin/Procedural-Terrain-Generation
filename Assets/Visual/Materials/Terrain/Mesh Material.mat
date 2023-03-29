@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-2192024552474474121
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Mesh Material
+  m_Shader: {fileID: -6465566751694194690, guid: 5a9ab502c8336a542a091b100d2e7ca5, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 2
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Texture1:
+        m_Texture: {fileID: 2800000, guid: 0043c5cadbeacc545b6278d84eb1b92b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2:
+        m_Texture: {fileID: 2800000, guid: 85aeffe0718393c40a94bfea8d427f17, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture3:
+        m_Texture: {fileID: 2800000, guid: 4e61638860bf0c54091249073a858c02, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture4:
+        m_Texture: {fileID: 2800000, guid: 402a52681b1a02e49a35d4c76c21ccf3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture5:
+        m_Texture: {fileID: 2800000, guid: 51305ade44b2c97459c1379653a8fef7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture6:
+        m_Texture: {fileID: 2800000, guid: d6d1f98174e6bb94ab5680461d5f1364, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Triplanar_1ed9b9b5e88d4b949cfe94584fd1fe8b_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 926a47cb5dbae8a45a4f02a4f7056451, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Triplanar_459165b112694a509c296466c3bcb100_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 51305ade44b2c97459c1379653a8fef7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Triplanar_b3e653af4a68469195681050d4678196_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 85aeffe0718393c40a94bfea8d427f17, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Triplanar_ebdb6d0ddd0147fc82aa637c2ba27d95_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 4e61638860bf0c54091249073a858c02, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Blend1: 0
+    - _Blend2: 0.02
+    - _Blend3: 0.04
+    - _Blend4: 0.107
+    - _Blend5: 0.313
+    - _Blend6: 0.284
+    - _ColorStrength1: 0.8
+    - _ColorStrength2: 0
+    - _ColorStrength3: 0
+    - _ColorStrength4: 0
+    - _ColorStrength5: 0
+    - _ColorStrength6: 0
+    - _Epsilon: 0.0001
+    - _Height1: 0
+    - _Height2: 0.085
+    - _Height3: 0.088
+    - _Height4: 0.225
+    - _Height5: 0.431
+    - _Height6: 0.9
+    - _MaxHeight: 161.59966
+    - _MinHeight: 0
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _TextureScale1: 0.09
+    - _TextureScale2: 0.2
+    - _TextureScale3: 0.07
+    - _TextureScale4: 0.07
+    - _TextureScale5: 0.02
+    - _TextureScale6: 0.01
+    m_Colors:
+    - _Color1: {r: 0.06526638, g: 0.210478, b: 0.41509432, a: 0}
+    - _Color2: {r: 0.7075472, g: 0.6916337, b: 0.498398, a: 0}
+    - _Color3: {r: 0.068055026, g: 0.3490566, b: 0.10063491, a: 0}
+    - _Color4: {r: 0.31132078, g: 0.2587654, b: 0.17230332, a: 0}
+    - _Color5: {r: 0.4811321, g: 0.32520965, b: 0.2163581, a: 0}
+    - _Color6: {r: 0.764151, g: 0.764151, b: 0.764151, a: 0}
+  m_BuildTextureStacks: []

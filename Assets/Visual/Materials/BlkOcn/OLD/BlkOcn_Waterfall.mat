@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BlkOcn_Waterfall
+  m_Shader: {fileID: -6465566751694194690, guid: f415e9412a7e58145a3355e26318e2b4,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_39232087:
+        m_Texture: {fileID: 2800000, guid: 985261a3ce37df144b12a33aa9a4bbec, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_F5744DB5:
+        m_Texture: {fileID: 2800000, guid: 41cbaf0a6a0e24a42992ee299049288d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_6B3B1E11: 0.5
+    m_Colors:
+    - Vector2_4AF35E5A: {r: 0, g: 0.05, b: 0, a: 0}
+    - Vector2_5DCD27CA: {r: 0, g: 0.1, b: 0, a: 0}
+    - Vector2_841F20CF: {r: 1.5, g: 1.5, b: 0, a: 0}
+    - _Tiling: {r: 2, g: 2, b: 0, a: 0}
+--- !u!114 &2778821331766269255
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
