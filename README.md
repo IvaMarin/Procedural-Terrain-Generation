@@ -1,2 +1,2 @@
-# Synthetic-Terrain-Generation
+# Synthetic Terrain Generation
  
