@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public static class TextureGenerator
@@ -33,5 +31,45 @@ public static class TextureGenerator
         }
 
         return TextureFromColourMap(colourMap, width, height);
+    }
+
+    public static void FlipTextureVertically(Texture2D texture)
+    {
+        Color[] originalPixels = texture.GetPixels();
+        Color[] flippedPixels = new Color[originalPixels.Length];
+
+        int width = texture.width;
+        int height = texture.height;
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                flippedPixels[x + y * width] = originalPixels[x + (height - y - 1) * width];
+            }
+        }
+
+        texture.SetPixels(flippedPixels);
+        texture.Apply();
+    }
+
+    public static void FlipTextureHorizontally(Texture2D texture)
+    {
+        Color[] originalPixels = texture.GetPixels();
+        Color[] flippedPixels = new Color[originalPixels.Length];
+
+        int width = texture.width;
+        int height = texture.height;
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                flippedPixels[x + y * width] = originalPixels[(width - x - 1) + y * width];
+            }
+        }
+
+        texture.SetPixels(flippedPixels);
+        texture.Apply();
     }
 }

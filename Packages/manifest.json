@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.kink3d.mirrors": "file:C:/Users/Asus/Documents/Unity Plugins/kMirrors",
     "com.unity.collab-proxy": "2.0.1",
     "com.unity.feature.development": "1.0.1",
     "com.unity.ide.rider": "3.0.18",

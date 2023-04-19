@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public static class HeightMapGenerator
@@ -32,7 +30,6 @@ public static class HeightMapGenerator
 
         return new HeightMap(values, minValue, maxValue);
     }
-
 }
 
 public struct HeightMap

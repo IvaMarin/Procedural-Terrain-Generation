@@ -1,19 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Audio;
-// Needed for FileStream and File
-using System.IO;
 
-// Needed for BinaryFormatter
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization;
-
-// Needed for [Serializable]
-using System;
-using UnityEngine.Serialization;
-
-public class SaveManager : MonoBehaviour {
+public class SaveManager : MonoBehaviour
+{
     public static bool dontChangeResOnLoadBCChangedInTitle;
 
     public static bool dpad_cam;

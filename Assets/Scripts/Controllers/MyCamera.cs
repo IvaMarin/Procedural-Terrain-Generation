@@ -1,10 +1,6 @@
-﻿using System.Collections;
-
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
-////using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MyCamera : MonoBehaviour
 {
@@ -104,7 +100,7 @@ public class MyCamera : MonoBehaviour
         playerXZ = new Vector3();
 
         ////playershadow = GameObject.Find("Player Shadow").GetComponent<PlayerShadowHelper>();
-        ////dbox = HF.GetDialogueBox();
+        ////dbox = HelperFunctions.GetDialogueBox();
 
         string scenename = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
         myPlayerGO = GameObject.Find("MyPlayer");

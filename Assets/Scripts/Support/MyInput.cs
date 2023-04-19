@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-////using JetBrains.Annotations;
 using UnityEngine;
 ////using Rewired;
 
@@ -454,13 +452,13 @@ public class MyInput : MonoBehaviour
             // Rotate if needed.
             if (SaveManager.r_stick_rotation > 0) {
                 temp_v2.Set(r_stick_x,r_stick_y);
-                HF.Rotate_vec2_ccw(ref temp_v2,-SaveManager.r_stick_rotation);
+                HelperFunctions.Rotate_vec2_ccw(ref temp_v2,-SaveManager.r_stick_rotation);
                 r_stick_x = temp_v2.x;
                 r_stick_y = temp_v2.y;
             }
             if (SaveManager.l_stick_rotation > 0) {
                 temp_v2.Set(l_stick_x,l_stick_y);
-                HF.Rotate_vec2_ccw(ref temp_v2,-SaveManager.l_stick_rotation);
+                HelperFunctions.Rotate_vec2_ccw(ref temp_v2,-SaveManager.l_stick_rotation);
                 l_stick_x = temp_v2.x;
                 l_stick_y = temp_v2.y;
             }
@@ -827,11 +825,6 @@ public class MyInput : MonoBehaviour
         }
         #endregion
 
-        if (pause)
-        {
-            Debug.Break();
-        }
-
         #endregion
 
         // Set keyboard as priority if input detected
@@ -965,7 +958,6 @@ public class MyInput : MonoBehaviour
         KC_scan_inputShift = KeyCode.RightShift;
 
         KC_ss_mode = KeyCode.F;
-
     }
     public static void Use_preset_keyboard()
     {

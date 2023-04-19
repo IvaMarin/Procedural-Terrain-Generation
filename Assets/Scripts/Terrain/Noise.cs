@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public static class Noise
@@ -25,7 +23,7 @@ public static class Noise
             octaveOffsets[i] = new Vector2(offsetX, offsetY);
 
             maxPossibleHeight += amplitude;
-            amplitude *= settings.persistance;
+            amplitude *= settings.persistence;
         }
 
         // Normalization parameters.
@@ -54,7 +52,7 @@ public static class Noise
                     noiseHeight += perlinValue * amplitude;
 
                     // Lowers octave's amplitude.
-                    amplitude *= settings.persistance;
+                    amplitude *= settings.persistence;
                     // Increases octave's frequency.
                     frequency *= settings.lacunarity;
                 }
@@ -107,7 +105,7 @@ public class NoiseSettings
 
     public int octaves = 6;
     [Range(0, 1)]
-    public float persistance = 0.5f;
+    public float persistence = 0.5f;
     public float lacunarity = 2;
 
     public int seed;
@@ -118,6 +116,6 @@ public class NoiseSettings
         scale = Mathf.Max(scale, 0.01f);
         octaves = Mathf.Max(octaves, 1);
         lacunarity = Mathf.Max(lacunarity, 1);
-        persistance = Mathf.Clamp01(persistance);
+        persistence = Mathf.Clamp01(persistence);
     }
 }

@@ -15,5 +15,7 @@ MonoBehaviour:
   autoUpdate: 1
   meshScale: 10
   useFlatShading: 0
+  addTrees: 1
+  addWater: 1
   chunkSizeIndex: 3
   flatshadedChunkSizeIndex: 1

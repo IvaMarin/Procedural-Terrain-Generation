@@ -2,9 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-//// using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class MyPlayer3D : MonoBehaviour
 {
@@ -24,6 +22,8 @@ public class MyPlayer3D : MonoBehaviour
     public bool forcePausingFromMyEvent = false;
     internal bool pause_screenshot = false;
     internal MyCamera cam;
+    internal GameObject _rippleCamera;
+    private ParticleSystem _rippleParticles;
     ParticleSystem SplashParticles;
     ParticleSystem WaterRingParticles;
     ParticleSystem HoverParticles;
@@ -487,6 +487,10 @@ public class MyPlayer3D : MonoBehaviour
         //emission_helper_GO = transform.Find("Emission Helper").gameObject;
 
         cam = GameObject.Find("MyCamera").GetComponent<MyCamera>();
+
+        _rippleParticles = transform.Find("Ripple Particle System").GetComponent<ParticleSystem>();
+        _rippleCamera = GameObject.Find("Ripple Camera");
+
         rb = gameObject.GetComponent<Rigidbody>();
         cc = GetComponent<CapsuleCollider>();
         ////growingTetherObject = Instantiate(tetherObjectPrefab, null) as GameObject;
@@ -504,12 +508,12 @@ public class MyPlayer3D : MonoBehaviour
         //        print(activePlayerModel);
         // Registry.gael_playable_in_postgame = true;
         //in_postgame = true;
-        //HF.Warning("Gael force enabled");
+        //HelperFunctions.Warning("Gael force enabled");
         SwitchActiveModel(activePlayerModel);
         play_restrict_message = false;
 
 
-        ////dbox = HF.GetDialogueBox();
+        ////dbox = HelperFunctions.GetDialogueBox();
         cam = GameObject.Find("MyCamera").GetComponent<MyCamera>();
         fixedHelperTransform = new GameObject();
         fixedHelperTransform.name = name + "fixedHelperTransform";
@@ -729,7 +733,7 @@ public class MyPlayer3D : MonoBehaviour
             {
                 if (hasPoisonResistance)
                 {
-                    if (HF.TimerStayAtMax(ref t_poisonShroom, tm_hasPoisonRes, Time.fixedDeltaTime))
+                    if (HelperFunctions.TimerStayAtMax(ref t_poisonShroom, tm_hasPoisonRes, Time.fixedDeltaTime))
                     {
                         respawn = true;
                         ////SoundPlayer.instance.lava_die();
@@ -740,7 +744,7 @@ public class MyPlayer3D : MonoBehaviour
                 }
                 else
                 {
-                    if (HF.TimerStayAtMax(ref t_poisonShroom, tm_noPoisonRes, Time.fixedDeltaTime))
+                    if (HelperFunctions.TimerStayAtMax(ref t_poisonShroom, tm_noPoisonRes, Time.fixedDeltaTime))
                     {
                         respawn = true;
                         ////SoundPlayer.instance.lava_die();
@@ -760,22 +764,22 @@ public class MyPlayer3D : MonoBehaviour
                 {
                     if (hasPoisonResistance)
                     {
-                        HF.TimerStayAtMin(ref t_poisonShroom, 0, Time.fixedDeltaTime / 50f * tm_hasPoisonRes);
+                        HelperFunctions.TimerStayAtMin(ref t_poisonShroom, 0, Time.fixedDeltaTime / 50f * tm_hasPoisonRes);
                     }
                     else
                     {
-                        HF.TimerStayAtMin(ref t_poisonShroom, 0, Time.fixedDeltaTime / 50f);
+                        HelperFunctions.TimerStayAtMin(ref t_poisonShroom, 0, Time.fixedDeltaTime / 50f);
                     }
                 }
                 else
                 {
                     if (hasPoisonResistance)
                     {
-                        HF.TimerStayAtMin(ref t_poisonShroom, 0, Time.fixedDeltaTime * tm_hasPoisonRes);
+                        HelperFunctions.TimerStayAtMin(ref t_poisonShroom, 0, Time.fixedDeltaTime * tm_hasPoisonRes);
                     }
                     else
                     {
-                        HF.TimerStayAtMin(ref t_poisonShroom, 0, Time.fixedDeltaTime);
+                        HelperFunctions.TimerStayAtMin(ref t_poisonShroom, 0, Time.fixedDeltaTime);
                     }
                 }
             }
@@ -971,7 +975,7 @@ public class MyPlayer3D : MonoBehaviour
                 rb.velocity = pausedRBVel;
                 wasPausedFixed = false;
             }
-            if (HF.TimerDefault(ref t_updatePositionBuffer, positionBufferUpdateInterval)) {
+            if (HelperFunctions.TimerDefault(ref t_updatePositionBuffer, positionBufferUpdateInterval)) {
                 if (Is_touching_ground(1f)) {
                     MyPlayer3D.recentPosBufIdx++;
                     if (MyPlayer3D.recentPosBufIdx == MyPlayer3D.positionBuf.Length) MyPlayer3D.recentPosBufIdx = 0;
@@ -1876,11 +1880,11 @@ public class MyPlayer3D : MonoBehaviour
                     if ((is_sprinting_speed_on) && jump_state == jump_state_ground)
                     {
                         // Accelerate slower from a standstill on the ground
-                        HF.TimerStayAtMax(ref t_walk_accel, tm_walk_accel_time, Time.fixedDeltaTime / 2f);
+                        HelperFunctions.TimerStayAtMax(ref t_walk_accel, tm_walk_accel_time, Time.fixedDeltaTime / 2f);
                     }
                     else
                     {
-                        HF.TimerStayAtMax(ref t_walk_accel, tm_walk_accel_time, Time.fixedDeltaTime);
+                        HelperFunctions.TimerStayAtMax(ref t_walk_accel, tm_walk_accel_time, Time.fixedDeltaTime);
                     }
 
                     target_vel_xz.x *= Mathf.Lerp(0f, 1f, t_walk_accel / tm_walk_accel_time);
@@ -2202,7 +2206,7 @@ public class MyPlayer3D : MonoBehaviour
                     // Messy - changes the lerping values depending if you're falling (after jumping) or falling (after falling off ledge)
                     float slowdownTime = tm_fall_arc_slowdown;
                     //if (in_firstJumpArc_via_fallingWithoutJump) slowdownTime = tm_slowdown_during_a_fall_from_ledge;
-                    HF.TimerStayAtMax(ref t_fall_arc_slowdown, slowdownTime, Time.fixedDeltaTime);
+                    HelperFunctions.TimerStayAtMax(ref t_fall_arc_slowdown, slowdownTime, Time.fixedDeltaTime);
                     float minDrag = fall_arc_slowdown_xc_vel_multiplier;
                     //if (in_firstJumpArc_via_fallingWithoutJump) minDrag = fallWithoutJump_slowdown_xc_vel_multiplier;
                     fall_drag_factor = Mathf.Lerp(1f, minDrag, t_fall_arc_slowdown / slowdownTime);
@@ -2289,7 +2293,7 @@ public class MyPlayer3D : MonoBehaviour
                             // Same to the code when movement input is held, but velocity is calculated based on the locked vel.
                             float tm = tm_fall_arc_slowdown;
                             if (in_firstJumpArc_via_fallingWithoutJump) tm = tm_slowdown_during_a_fall_from_ledge;
-                            HF.TimerStayAtMax(ref t_fall_arc_slowdown_wo_moveInput, tm, Time.fixedDeltaTime);
+                            HelperFunctions.TimerStayAtMax(ref t_fall_arc_slowdown_wo_moveInput, tm, Time.fixedDeltaTime);
                             float minDrag = fall_arc_slowdown_xc_vel_multiplier;
                             if (in_firstJumpArc_via_fallingWithoutJump) minDrag = fallWithoutJump_slowdown_xc_vel_multiplier;
 
@@ -2675,7 +2679,7 @@ public class MyPlayer3D : MonoBehaviour
             if (grapple_submode == 0)
             {
                 nextJumpVel = Vector3.zero;
-                if (HF.TimerDefault(ref t_grapplePause, 0.15f))
+                if (HelperFunctions.TimerDefault(ref t_grapplePause, 0.15f))
                 {
                     grapple_submode = 1;
                 }
@@ -2931,7 +2935,7 @@ public class MyPlayer3D : MonoBehaviour
             else if (!touching_ground)
             {
                 if (my_jp_dash) t_fallJumpGrace = tm_fallJumpGrace;
-                if (HF.TimerDefault(ref t_fallJumpGrace, tm_fallJumpGrace))
+                if (HelperFunctions.TimerDefault(ref t_fallJumpGrace, tm_fallJumpGrace))
                 {
                     Enter_jumpstate_firstJumpArc();
                     in_firstJumpArc_via_fallingWithoutJump = true;
@@ -3081,7 +3085,7 @@ public class MyPlayer3D : MonoBehaviour
         }
         else if (jump_state == 100)
         {
-            if (HF.TimerDefault(ref t_delay_after_jump_input, tm_delay_after_jump_input, Time.fixedDeltaTime))
+            if (HelperFunctions.TimerDefault(ref t_delay_after_jump_input, tm_delay_after_jump_input, Time.fixedDeltaTime))
             {
                 Set_nextJumpVel_doAnim_playSFX();
 
@@ -3605,7 +3609,7 @@ public class MyPlayer3D : MonoBehaviour
             float f = 0.501f - 0.5f * (t_returnToTether / 0.5f);
             returnToTether_scale.Set(f, f, f);
             activeModel.transform.localScale = returnToTether_scale;
-            if (HF.TimerDefault(ref t_returnToTether, 0.5f)) {
+            if (HelperFunctions.TimerDefault(ref t_returnToTether, 0.5f)) {
                 Warp_to(tetherReturnPosition);
                 returnToTether_scale.Set(0.5f, 0.5f, 0.5f);
                 justReturnedToTether = true;
@@ -3754,7 +3758,7 @@ public class MyPlayer3D : MonoBehaviour
 
         if (sprint_time_to_accel > 0)
         {
-            //display_debug_text_next_frame("Sprint Accel Time: " + HF.TruncateFloat(sprint_time_to_accel));
+            //display_debug_text_next_frame("Sprint Accel Time: " + HelperFunctions.TruncateFloat(sprint_time_to_accel));
         }
 
         if (t_glideOrbTime > 0 && !hideUItrailer)
@@ -3785,7 +3789,7 @@ public class MyPlayer3D : MonoBehaviour
         }
         if (t_speedPodTime > 0 && !hideUItrailer)
         {
-            //display_debug_text_next_frame("Speed Pod Time: " + HF.TruncateFloat(t_speedPodTime));
+            //display_debug_text_next_frame("Speed Pod Time: " + HelperFunctions.TruncateFloat(t_speedPodTime));
             //display_debug_text_next_frame("Pod Combo (speed maxes at 3): " + SpeedPod.current_used_pods);
             ////ui.Set_speed_meter(t_speedPodTime);
         }
@@ -3838,15 +3842,15 @@ public class MyPlayer3D : MonoBehaviour
         {
             if (hasdirlightfordebug)
             {
-                display_debug_text_next_frame("Light euler: " + HF.TruncateFloat(testlight.localRotation.x) + "," + HF.TruncateFloat(testlight.localRotation.y) + "," + HF.TruncateFloat(testlight.localRotation.z));
+                display_debug_text_next_frame("Light euler: " + HelperFunctions.TruncateFloat(testlight.localRotation.x) + "," + HelperFunctions.TruncateFloat(testlight.localRotation.y) + "," + HelperFunctions.TruncateFloat(testlight.localRotation.z));
 
             }
 
-            display_debug_text_next_frame("Sprint Angular Vel: " + HF.TruncateFloat(sprint_rotVel));
+            display_debug_text_next_frame("Sprint Angular Vel: " + HelperFunctions.TruncateFloat(sprint_rotVel));
             display_debug_text_next_frame("XZ Speed " +
-                                          HF.TruncateFloat(Mathf.Sqrt(rb.velocity.x * rb.velocity.x +
+                                          HelperFunctions.TruncateFloat(Mathf.Sqrt(rb.velocity.x * rb.velocity.x +
                                                                       rb.velocity.z * rb.velocity.z)));
-            display_debug_text_next_frame("Y Speed " + HF.TruncateFloat(rb.velocity.y));
+            display_debug_text_next_frame("Y Speed " + HelperFunctions.TruncateFloat(rb.velocity.y));
         }
 
         if (MyInput.shortcut && Input.GetKeyDown(KeyCode.D) && !paused_during_linking)
@@ -3938,6 +3942,31 @@ public class MyPlayer3D : MonoBehaviour
             }
         }
 
+        _rippleCamera.transform.position = transform.position + Vector3.up * 10;
+        Shader.SetGlobalVector("_PlayerPosition", transform.position);
+    }
+
+
+    private void CreateRipple(int start, int end, int delta, float speed, float size, float lifetime)
+    {
+        Vector3 forward = _rippleParticles.transform.eulerAngles;
+        forward.y = start;
+        _rippleParticles.transform.eulerAngles = forward;
+
+        for (int i = start; i < end; i += delta)
+        {
+            ParticleSystem.EmitParams rippleParams = new()
+            {
+                position = transform.position + _rippleParticles.transform.forward * 0.5f,
+                velocity = _rippleParticles.transform.forward * speed,
+                startSize = size,
+                startLifetime = lifetime,
+                startColor = Color.white
+            };
+            _rippleParticles.Emit(rippleParams, 1);
+
+            _rippleParticles.transform.eulerAngles += Vector3.up * delta;
+        }
     }
 
     List<string> debug_text_to_show = new List<string>();
@@ -4146,6 +4175,11 @@ public class MyPlayer3D : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.layer == 4 && (holdingAnyMovement || !Is_touching_ground()))
+        {
+            CreateRipple(-180, 180, 3, 4, 2.5f, 3);
+        }
+
         if (other.CompareTag("SlipWall"))
         {
             was_in_slipwall_last_frame = true;
@@ -4204,6 +4238,11 @@ public class MyPlayer3D : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (other.gameObject.layer == 4 && (holdingAnyMovement || !Is_touching_ground()))
+        {
+            CreateRipple(-180, 180, 3, 4, 2.5f, 3);
+        }
+
         if (other.CompareTag("Ice"))
         {
             active_ice.Remove(other);
@@ -4257,6 +4296,15 @@ public class MyPlayer3D : MonoBehaviour
                 ////connected_squishyPlatform = null;
                 DisconnectRB();
             }
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.layer == 4 && holdingAnyMovement && Time.renderedFrameCount % 5 == 0)
+        {
+            int y = (int)transform.eulerAngles.y;
+            CreateRipple(y - 100, y + 100, 3, 3, 2, 1.5f);
         }
     }
 
@@ -4505,7 +4553,7 @@ public class MyPlayer3D : MonoBehaviour
 
     public void Toggle_TeledashWallrun(bool off)
     {
-        HF.Warning("Teledash and wallrun set to: " + !off);
+        HelperFunctions.Warning("Teledash and wallrun set to: " + !off);
         teledash_and_wallrun_disabled = off;
     }
     //SwitchCharacter
@@ -4685,12 +4733,12 @@ public class MyPlayer3D : MonoBehaviour
 
     float Get_angle_from_xz(Vector3 v, bool absolute = false)
     {
-        return HF.Get_angle_from_xz(v, absolute);
+        return HelperFunctions.Get_angle_from_xz(v, absolute);
     }
 
     float Get_slope_angle(Vector3 slopeNormal)
     {
-        return HF.Get_slope_angle(slopeNormal);
+        return HelperFunctions.Get_slope_angle(slopeNormal);
     }
 
     public bool Is_touching_ground(float checkDistance = -1, bool debug = false)

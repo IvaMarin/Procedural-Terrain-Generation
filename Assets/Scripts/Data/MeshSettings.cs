@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu()]
@@ -14,6 +12,9 @@ public class MeshSettings : UpdatableData
     public float meshScale = 2.5f;
 
     public bool useFlatShading;
+
+    public bool addTrees;
+    public bool addWater;
 
     [Range(0, numberOfSupportedChunkSizes - 1)]
     public int chunkSizeIndex;

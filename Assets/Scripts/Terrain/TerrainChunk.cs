@@ -1,18 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Rendering;
+using System;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class TerrainChunk
 {
     private const float _colliderGenerationDistanceThreshold = 5;
 
-    public event System.Action<TerrainChunk, bool> OnVisibilityChanged;
+    public event Action<TerrainChunk, bool> OnVisibilityChanged;
 
     public Vector2 coordinate;
 
-    private GameObject _terrainMeshObject;
+    public GameObject terrainMeshObject;
+    private GameObject _treesGenerator;
+
     private Vector2 _sampleCentre;
     private Bounds _bounds;
 
@@ -24,7 +23,7 @@ public class TerrainChunk
     private LODMesh[] _levelOfDetailMeshes;
     private int _colliderLODIndex;
 
-    private HeightMap _heightMap;
+    public HeightMap heightMap;
     private bool _isHeightMapReceived;
     private int _previousLevelOfDetailIndex = -1;
     private bool _hasSetCollider;
@@ -32,43 +31,45 @@ public class TerrainChunk
 
     private HeightMapSettings _heightMapSettings;
     private MeshSettings _meshSettings;
+    private TextureSettings _textureSettings;
+
     private Transform _viewer;
 
     public TerrainChunk(Vector2 coordinate,
                         HeightMapSettings heightMapSettings, MeshSettings meshSettings, TextureSettings textureSettings,
                         LODInfo[] detailLevels, int colliderLODIndex, Transform parent, Transform viewer,
-                        Material mapMaterial, Material waterMaterial)
+                        Material mapMaterial, Material waterMaterial, GameObject treesGenerator)
     {
         this.coordinate = coordinate;
         _detailLevels = detailLevels;
         _colliderLODIndex = colliderLODIndex;
         _heightMapSettings = heightMapSettings;
         _meshSettings = meshSettings;
+        _textureSettings = textureSettings;
         _viewer = viewer;
 
         _sampleCentre = coordinate * meshSettings.MeshWorldSize / meshSettings.meshScale;
         Vector2 position = coordinate * meshSettings.MeshWorldSize;
         _bounds = new Bounds(position, Vector2.one * meshSettings.MeshWorldSize);
 
-        _terrainMeshObject = new GameObject("Terrain Chunk");
-        _meshRenderer = _terrainMeshObject.AddComponent<MeshRenderer>();
-        _meshFilter = _terrainMeshObject.AddComponent<MeshFilter>();
-        _meshCollider = _terrainMeshObject.AddComponent<MeshCollider>();
+        terrainMeshObject = new GameObject("Terrain Chunk");
+        _meshRenderer = terrainMeshObject.AddComponent<MeshRenderer>();
+        _meshFilter = terrainMeshObject.AddComponent<MeshFilter>();
+        _meshCollider = terrainMeshObject.AddComponent<MeshCollider>();
         _meshRenderer.material = mapMaterial;
 
-        _terrainMeshObject.transform.position = new Vector3(position.x, 0, position.y);
-        _terrainMeshObject.transform.parent = parent;
+        terrainMeshObject.transform.position = new Vector3(position.x, 0, position.y);
+        terrainMeshObject.transform.parent = parent;
 
-        // Creating water chunk.
-        GameObject waterMeshObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
-        waterMeshObject.GetComponent<MeshCollider>().enabled = false;
-        waterMeshObject.GetComponent<MeshRenderer>().material = waterMaterial;
+        if (_meshSettings.addTrees)
+        {
+            AddTreesGenerator(treesGenerator);
+        }
 
-        waterMeshObject.GetComponent<Transform>().localScale *= meshSettings.NumberOfVerticesPerLine - 3;
-        waterMeshObject.GetComponent<Transform>().position = _terrainMeshObject.transform.position +
-            new Vector3(0, (textureSettings.layers[1].startHeight - textureSettings.layers[1].blendStrength) *
-            heightMapSettings.heightMultiplier, 0);
-        waterMeshObject.transform.parent = _terrainMeshObject.transform;
+        if (_meshSettings.addWater)
+        {
+            CreateWaterPlane(waterMaterial);
+        }
 
         SetVisible(false);
 
@@ -76,14 +77,55 @@ public class TerrainChunk
         for (int i = 0; i < detailLevels.Length; i++)
         {
             _levelOfDetailMeshes[i] = new LODMesh(detailLevels[i].lod);
-            _levelOfDetailMeshes[i].updateCallback += UpdateTerrainChunk;
+            _levelOfDetailMeshes[i].UpdateCallback += UpdateTerrainChunk;
             if (i == _colliderLODIndex)
             {
-                _levelOfDetailMeshes[i].updateCallback += UpdateCollisionMesh;
+                _levelOfDetailMeshes[i].UpdateCallback += UpdateCollisionMesh;
             }
         }
 
         _maxViewDistance = detailLevels[^1].visibleDistanceThreshold;
+    }
+
+    private void AddTreesGenerator(GameObject treesGenerator)
+    {
+        if (treesGenerator != null)
+        {
+            _treesGenerator = UnityEngine.Object.Instantiate(treesGenerator);
+            _treesGenerator.transform.position = terrainMeshObject.transform.position;
+            _treesGenerator.transform.SetParent(terrainMeshObject.transform, true);
+        }
+    }
+
+    private void GenerateTrees()
+    {
+        if (_treesGenerator != null)
+        {
+            _treesGenerator.GetComponent<TreesGenerator>().Clear();
+            foreach (TreesGenerator treeTypeGenerator in _treesGenerator.GetComponents<TreesGenerator>())
+            {
+                treeTypeGenerator.Generate();
+            }
+        }
+    }
+
+    private void CreateWaterPlane(Material waterMaterial)
+    {
+
+        GameObject waterMeshObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        waterMeshObject.GetComponent<MeshCollider>().enabled = false;
+        waterMeshObject.AddComponent<BoxCollider>().isTrigger = true;
+        Vector3 oldSize = waterMeshObject.GetComponent<BoxCollider>().size;
+        waterMeshObject.GetComponent<BoxCollider>().size = new Vector3(oldSize.x, 0.002f, oldSize.z);
+        waterMeshObject.GetComponent<MeshRenderer>().material = waterMaterial;
+
+        waterMeshObject.GetComponent<Transform>().localScale *= _meshSettings.NumberOfVerticesPerLine - 3;
+        waterMeshObject.GetComponent<Transform>().position = terrainMeshObject.transform.position +
+            new Vector3(0, (_textureSettings.layers[1].startHeight - _textureSettings.layers[1].blendStrength) *
+            _heightMapSettings.heightMultiplier, 0);
+        waterMeshObject.layer = 4;
+        waterMeshObject.transform.parent = terrainMeshObject.transform;
+
     }
 
     public void Load()
@@ -96,7 +138,7 @@ public class TerrainChunk
 
     private void OnHeightMapReceived(object heightMapObject)
     {
-        _heightMap = (HeightMap)heightMapObject;
+        heightMap = (HeightMap)heightMapObject;
         _isHeightMapReceived = true;
 
         UpdateTerrainChunk();
@@ -144,7 +186,7 @@ public class TerrainChunk
                     }
                     else if (!levelOfDetailMesh.hasRequestedMesh)
                     {
-                        levelOfDetailMesh.RequestMesh(_heightMap, _meshSettings);
+                        levelOfDetailMesh.RequestMesh(heightMap, _meshSettings);
                     }
                 }
             }
@@ -167,16 +209,20 @@ public class TerrainChunk
             {
                 if (!_levelOfDetailMeshes[_colliderLODIndex].hasRequestedMesh)
                 {
-                    _levelOfDetailMeshes[_colliderLODIndex].RequestMesh(_heightMap, _meshSettings);
+                    _levelOfDetailMeshes[_colliderLODIndex].RequestMesh(heightMap, _meshSettings);
                 }
-            }
+                //}
 
-            if (sqrDstFromViewerToEdge < _colliderGenerationDistanceThreshold * _colliderGenerationDistanceThreshold)
-            {
+                //if (sqrDstFromViewerToEdge < _colliderGenerationDistanceThreshold * _colliderGenerationDistanceThreshold) {
                 if (_levelOfDetailMeshes[_colliderLODIndex].hasMesh)
                 {
                     _meshCollider.sharedMesh = _levelOfDetailMeshes[_colliderLODIndex].mesh;
                     _hasSetCollider = true;
+
+                    if (_meshSettings.addTrees)
+                    {
+                        GenerateTrees();
+                    }
                 }
             }
         }
@@ -184,12 +230,12 @@ public class TerrainChunk
 
     public void SetVisible(bool isVisible)
     {
-        _terrainMeshObject.SetActive(isVisible);
+        terrainMeshObject.SetActive(isVisible);
     }
 
     public bool IsVisible()
     {
-        return _terrainMeshObject.activeSelf;
+        return terrainMeshObject.activeSelf;
     }
 }
 
@@ -199,7 +245,7 @@ class LODMesh
     public bool hasRequestedMesh;
     public bool hasMesh;
     private int _lod;
-    public event System.Action updateCallback;
+    public event Action UpdateCallback;
 
     public LODMesh(int lod)
     {
@@ -211,7 +257,7 @@ class LODMesh
         mesh = ((MeshData)meshDataObject).CreateMesh();
         hasMesh = true;
 
-        updateCallback();
+        UpdateCallback();
     }
 
     public void RequestMesh(HeightMap heightMap, MeshSettings meshSettings)

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MapPreview : MonoBehaviour
@@ -51,31 +49,39 @@ public class MapPreview : MonoBehaviour
 
     public void DrawTexture(Texture2D texture)
     {
-        noiseTextureRenderer.sharedMaterial.mainTexture = texture;
-        float scale = 10f / meshSettings.meshScale;
-        noiseTextureRenderer.transform.localScale = new Vector3(texture.width, 1, texture.height) / scale;
+        if (noiseTextureRenderer != null)
+        {
+            noiseTextureRenderer.sharedMaterial.mainTexture = texture;
+            float scale = 10f / meshSettings.meshScale;
+            noiseTextureRenderer.transform.localScale = new Vector3(texture.width, 1, texture.height) / scale;
 
-        noiseTextureRenderer.gameObject.SetActive(true);
-        terrainMeshFilter.gameObject.SetActive(false);
-        waterMeshFilter.gameObject.SetActive(false);
+            noiseTextureRenderer.gameObject.SetActive(true);
+            terrainMeshFilter.gameObject.SetActive(false);
+            waterMeshFilter.gameObject.SetActive(false);
+        }
     }
 
     public void DrawMesh(MeshData meshData)
     {
-        terrainMeshFilter.sharedMesh = meshData.CreateMesh();
-
-        noiseTextureRenderer.gameObject.SetActive(false);
-        terrainMeshFilter.gameObject.SetActive(true);
+        if (terrainMeshFilter != null)
+        {
+            terrainMeshFilter.sharedMesh = meshData.CreateMesh();
+            noiseTextureRenderer.gameObject.SetActive(false);
+            terrainMeshFilter.gameObject.SetActive(true);
+        }
     }
 
     public void DrawWaterMesh(MeshData meshData)
     {
-        waterMeshFilter.sharedMesh = meshData.CreateMesh();
-        float scale = 10f / meshSettings.meshScale;
-        waterMeshFilter.gameObject.transform.localScale = Vector3.one * scale;
-        waterMeshFilter.gameObject.transform.position = new Vector3(0, (textureSettings.layers[1].startHeight -
-            textureSettings.layers[1].blendStrength) * heightMapSettings.heightMultiplier, 0);
-        waterMeshFilter.gameObject.SetActive(true);
+        if (waterMeshFilter != null)
+        {
+            waterMeshFilter.sharedMesh = meshData.CreateMesh();
+            float scale = 10f / meshSettings.meshScale;
+            waterMeshFilter.gameObject.transform.localScale = Vector3.one * scale;
+            waterMeshFilter.gameObject.transform.position = new Vector3(0, (textureSettings.layers[1].startHeight -
+                textureSettings.layers[1].blendStrength) * heightMapSettings.heightMultiplier, 0);
+            waterMeshFilter.gameObject.SetActive(true);
+        }
     }
 
     private void OnValuesUpdated()

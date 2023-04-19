@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public static class MeshGenerator
@@ -214,6 +212,8 @@ public class MeshData
         else
         {
             _vertices[vertexIndex] = vertexPosition;
+
+            // Can be used in shader to have more control over terrain areas.
             _uvMap[vertexIndex] = uvCoordinate;
         }
     }
