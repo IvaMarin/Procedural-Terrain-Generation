@@ -1,5 +1,8 @@
 # Procedural Terrain Generation
 
+- [English](README.md)
+- [Русский](README_RUS.md)
+
 ## Controls
 
 | Keyboard & Mouse | Controls |
