@@ -23,8 +23,6 @@ public class TreesGenerator : MonoBehaviour
 
     [Header("Prefab Variation Settings")]
 
-    [SerializeField, Range(0, 1)]
-    private float _rotateTowardsNormal;
     [SerializeField]
     private Vector2 _rotationRange;
     [SerializeField]
@@ -63,12 +61,8 @@ public class TreesGenerator : MonoBehaviour
     private void CreatePrefab(RaycastHit hit)
     {
         GameObject instantiatedPrefab = Instantiate(_prefab, transform);
-        instantiatedPrefab.transform.position = hit.point;
-        instantiatedPrefab.transform.Rotate(Vector3.up, Random.Range(_rotationRange.x, _rotationRange.y), Space.Self);
-        instantiatedPrefab.transform.rotation = Quaternion.Lerp(
-            transform.rotation,
-            transform.rotation * Quaternion.FromToRotation(instantiatedPrefab.transform.up, hit.normal),
-            _rotateTowardsNormal);
+        instantiatedPrefab.transform.SetPositionAndRotation(hit.point,
+            Quaternion.Euler(-90, 0, Random.Range(_rotationRange.x, _rotationRange.y)));
         instantiatedPrefab.transform.localScale = new Vector3(
             Random.Range(_minScale.x, _maxScale.x),
             Random.Range(_minScale.y, _maxScale.y),
