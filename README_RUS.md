@@ -1,29 +1,31 @@
-# Procedural Terrain Generation
+# Процедурная Генерация Ландшафта
 
-## Controls
+- [English](README.md)
 
-| Keyboard & Mouse | Controls |
+## Управление
+
+| Клавиатура & Мышь | Действие |
 |:-:|:-|
-| W | Move forwards |
-| A | Move left |
-| S | Move backwards |
-| D | Move right |
-| E | Move up |
-| Q | Move down |
-| R | Return to initial position |
-| Shift | Move fast |
-| Mouse Move | Rotate camera |
-| Mouse Wheel | Zoom in/out |
-| Esc | Enter/close menu |
+| W | Движение вперед |
+| A | Движение влево |
+| S | Движение назад |
+| D | Движение вправо |
+| E | Движение вверх |
+| Q | Движение вниз |
+| R | Возвращение на изначальную позицию |
+| Shift | Увеличение скорости передвижения |
+| Движение Мышью | Поворот камеры |
+| Колесо Мыши | Приближение/отдаление камеры |
+| Esc | Открытие/закрытие меню |
 
-## Save option
+## Функция сохранения
 
-When you press `save` in the menu, program will make a screenshot and save height maps of all terrain chunks visible in camera frustum. You can find saved data here:
+При нажатии в меню на кнопку `save` программа сделает скриншот и сохранит карты высот всех участков ландшафта, находящихся в области видимости камеры. Вы можете найти сохраненные данные здесь:
 
-- Build: `<Path to Application Folder>\Procedural Terrain Generation_Data\TerrainData`
-- Unity: `<Path to Project Folder>\Assets\TerrainData`
+- Build: `<Путь до папки приложения>\Procedural Terrain Generation_Data\TerrainData`
+- Unity: `<Путь до папки проекта>\Assets\TerrainData`
 
-## Screenshots
+## Скриншоты
 
 ![Screenshot_1](/Assets/Screenshots/Screenshot_1.png)
 
