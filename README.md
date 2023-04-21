@@ -28,8 +28,8 @@ When you press `save` in the menu, program will make a screenshot and save heigh
 
 ## Screenshots
 
-![Screenshot_1](/Assets/Screenshots/Screenshot_1.png)
+![Screenshot_1](Screenshots/Screenshot_1.png)
 
-![Screenshot_3](/Assets/Screenshots/Screenshot_3.png)
+![Screenshot_3](Screenshots/Screenshot_3.png)
 
-![Screenshot_2](/Assets/Screenshots/Screenshot_2.png)
+![Screenshot_2](Screenshots/Screenshot_2.png)
