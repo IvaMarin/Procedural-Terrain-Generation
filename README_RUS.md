@@ -21,7 +21,7 @@
 
 ## Функция сохранения
 
-При нажатии в меню на кнопку `save` программа сделает скриншот и сохранит карты высот всех участков ландшафта, находящихся в области видимости камеры. Вы можете найти сохраненные данные здесь:
+При нажатии в меню на кнопку `СОХРАНИТЬ` программа сделает скриншот и сохранит карты высот всех участков ландшафта, находящихся в области видимости камеры. Вы можете найти сохраненные данные здесь:
 
 - Build: `<Путь до папки приложения>\Procedural Terrain Generation_Data\TerrainData`
 - Unity: `<Путь до папки проекта>\Assets\TerrainData`
@@ -30,6 +30,6 @@
 
 ![Screenshot_1](Screenshots/Screenshot_1.png)
 
-![Screenshot_3](Screenshots/Screenshot_3.png)
-
 ![Screenshot_2](Screenshots/Screenshot_2.png)
+
+![Screenshot_3](Screenshots/Screenshot_3_ru.png)

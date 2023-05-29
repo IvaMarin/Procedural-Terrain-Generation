@@ -21,7 +21,7 @@
 
 ## Save option
 
-When you press `save` in the menu, program will make a screenshot and save height maps of all terrain chunks visible in camera frustum. You can find saved data here:
+When you press `SAVE` in the menu, program will make a screenshot and save height maps of all terrain chunks visible in camera frustum. You can find saved data here:
 
 - Build: `<Path to Application Folder>\Procedural Terrain Generation_Data\TerrainData`
 - Unity: `<Path to Project Folder>\Assets\TerrainData`
@@ -30,6 +30,6 @@ When you press `save` in the menu, program will make a screenshot and save heigh
 
 ![Screenshot_1](Screenshots/Screenshot_1.png)
 
-![Screenshot_3](Screenshots/Screenshot_3.png)
-
 ![Screenshot_2](Screenshots/Screenshot_2.png)
+
+![Screenshot_3](Screenshots/Screenshot_3_en.png)
