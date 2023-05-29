@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Menu Localization Table_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 643ce454c8db6f743a4f823f3beed986, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 27265449984
+    m_Localized: RESUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 673167294464
+    m_Localized: SETTINGS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 890751008768
+    m_Localized: SAVE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 905108111360
+    m_Localized: QUIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1090588622848
+    m_Localized: SCALE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1132493914112
+    m_Localized: OCTAVES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1159547174912
+    m_Localized: PERSISTENCE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1256993439744
+    m_Localized: LACUNARITY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1303311138816
+    m_Localized: SEED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1369564364800
+    m_Localized: HEIGHT MULTIPLIER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1435347828736
+    m_Localized: ADD WATER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1454519992320
+    m_Localized: ADD TREES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1491740246016
+    m_Localized: BACK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1510077743104
+    m_Localized: APPLY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31183637692416
+    m_Localized: LANGUAGES
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

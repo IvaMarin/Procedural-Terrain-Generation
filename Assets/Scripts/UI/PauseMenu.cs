@@ -6,6 +6,7 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject pauseMenuUI;
     public GameObject settingsMenuUI;
+    public GameObject languagesMenuUI;
 
     [SerializeField]
     private FreeFlyCamera _freeFlyCamera;
@@ -37,11 +38,18 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
+
+        if (languagesMenuUI.activeSelf)
+        {
+            languagesMenuUI.SetActive(false);
+        }
+
         if (settingsMenuUI.activeSelf)
         {
             settingsMenuUI.SetActive(false);
             settingsMenuUI.GetComponent<SettingsMenu>().UpdateUISettingsValues();
         }
+
         pauseMenuUI.GetComponent<Animator>().enabled = true;
 
         Time.timeScale = 1f;
