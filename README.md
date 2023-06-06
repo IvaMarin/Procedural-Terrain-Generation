@@ -34,8 +34,8 @@ When you press `SAVE` in the menu, program will make a screenshot and save heigh
 - Build: `<Path to Application Folder>\Procedural Terrain Generation_Data\TerrainData`
 - Unity: `<Path to Project Folder>\Assets\TerrainData`
 
-## Terrain Data Examples
+## Terrain data examples
 
-| Image | Height Map | Water Mask |
+| Image | Height map | Water mask |
 |:-:|:-:|:-:|
 | ![TerrainData_Image](Screenshots/TerrainData_Image.png) | ![TerrainData_HeightMap](Screenshots/TerrainData_HeightMap.png) | ![TerrainData_WaterMask](Screenshots/TerrainData_WaterMask.png)|
