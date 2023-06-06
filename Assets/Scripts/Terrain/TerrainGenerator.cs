@@ -35,7 +35,6 @@ public class TerrainGenerator : MonoBehaviour
     private GameObject _pauseMenu;
 
     private Camera _camera;
-    private Plane[] _cameraFrustum;
 
     private void Start()
     {
@@ -73,10 +72,9 @@ public class TerrainGenerator : MonoBehaviour
     public void SaveInCameraViewChunksData()
     {
         string dataFolderPath = Path.Combine(Application.dataPath, "TerrainData", $"Data_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}");
-        string heightMapsFolderPath = Path.Combine(dataFolderPath, "HeightMaps");
-        if (!Directory.Exists(heightMapsFolderPath))
+        if (!Directory.Exists(dataFolderPath))
         {
-            Directory.CreateDirectory(heightMapsFolderPath);
+            Directory.CreateDirectory(dataFolderPath);
         }
 
         if (_pauseMenu != null && PauseMenu.isGamePaused)
@@ -85,30 +83,57 @@ public class TerrainGenerator : MonoBehaviour
             pauseMenu.Resume();
         }
 
-        string screenshotPath = Path.Combine(dataFolderPath, "Screenshot.png");
-        ScreenCapture.CaptureScreenshot(screenshotPath, 2);
+        string screenshotPath = Path.Combine(dataFolderPath, "Image.png");
+        ScreenCapture.CaptureScreenshot(screenshotPath);
 
-        for (int i = 0; i < _visibleTerrainChunks.Count; i++)
+        float[,] heightMapValues = new float[Screen.width, Screen.height];
+        float[,] waterMaskValues = new float[Screen.width, Screen.height];
+        float heightMapMinValue = float.MaxValue;
+        float heightMapMaxValue = float.MinValue;
+
+        for (int x = 0; x < Screen.width; x++)
         {
-            TerrainChunk chunk = _visibleTerrainChunks[i];
-            Collider collider = chunk.terrainMeshObject.GetComponent<Collider>();
-            Bounds bounds = collider.bounds;
-
-            _cameraFrustum = GeometryUtility.CalculateFrustumPlanes(_camera);
-            if (GeometryUtility.TestPlanesAABB(_cameraFrustum, bounds))
+            for (int y = 0; y < Screen.height; y++)
             {
-                SaveHeightMap(chunk, i, heightMapsFolderPath);
+                Vector3 pos = new Vector3(x, y, 0);
+                Ray ray = _camera.ScreenPointToRay(pos);
+
+                if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+                {
+                    continue;
+                }
+
+                heightMapValues[x, y] = hit.point.y;
+
+                if (heightMapValues[x, y] > heightMapMaxValue)
+                {
+                    heightMapMaxValue = heightMapValues[x, y];
+                }
+                if (heightMapValues[x, y] < heightMapMinValue)
+                {
+                    heightMapMinValue = heightMapValues[x, y];
+                }
+
+                float waterLevel = hit.collider.gameObject.transform.position.y +
+                    (textureSettings.layers[1].startHeight - textureSettings.layers[1].blendStrength) *
+                    heightMapSettings.heightMultiplier;
+                if (hit.point.y <= waterLevel)
+                {
+                    waterMaskValues[x, y] = 1f;
+                }
             }
         }
+
+        SaveHeightMap(new HeightMap(heightMapValues, heightMapMinValue, heightMapMaxValue), dataFolderPath, "HeightMap.png");
+        SaveHeightMap(new HeightMap(waterMaskValues, 0f, 1f), dataFolderPath, "WaterMask.png");
     }
 
-    private void SaveHeightMap(TerrainChunk chunk, int id, string path)
+    private void SaveHeightMap(HeightMap heightMap, string path, string fileName)
     {
-        Texture2D texture = TextureGenerator.TextureFromHeightMap(chunk.heightMap);
-        TextureGenerator.FlipTextureHorizontally(texture);
+        Texture2D texture = TextureGenerator.TextureFromHeightMap(heightMap);
         byte[] bytes = ImageConversion.EncodeToPNG(texture);
 
-        string heightMapPath = Path.Combine(path, $"HeightMap_{id}.png");
+        string heightMapPath = Path.Combine(path, fileName);
         File.WriteAllBytes(heightMapPath, bytes);
     }
 

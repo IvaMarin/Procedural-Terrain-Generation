@@ -114,9 +114,13 @@ public class TerrainChunk
 
         GameObject waterMeshObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
         waterMeshObject.GetComponent<MeshCollider>().enabled = false;
-        waterMeshObject.AddComponent<BoxCollider>().isTrigger = true;
-        Vector3 oldSize = waterMeshObject.GetComponent<BoxCollider>().size;
-        waterMeshObject.GetComponent<BoxCollider>().size = new Vector3(oldSize.x, 0.002f, oldSize.z);
+
+        // BoxCollider is required for water ripples.
+
+        //waterMeshObject.AddComponent<BoxCollider>().isTrigger = true;
+        //Vector3 oldSize = waterMeshObject.GetComponent<BoxCollider>().size;
+        //waterMeshObject.GetComponent<BoxCollider>().size = new Vector3(oldSize.x, 0.002f, oldSize.z);
+
         waterMeshObject.GetComponent<MeshRenderer>().material = waterMaterial;
 
         waterMeshObject.GetComponent<Transform>().localScale *= _meshSettings.NumberOfVerticesPerLine - 3;
