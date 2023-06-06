@@ -34,8 +34,8 @@
 - Build: `<Путь до папки приложения>\Procedural Terrain Generation_Data\TerrainData`
 - Unity: `<Путь до папки проекта>\Assets\TerrainData`
 
-## Примеры Данных
+## Примеры данных
 
-| Снимок | Карта Высот | Водная Маска |
+| Снимок | Карта высот | Водная маска |
 |:-:|:-:|:-:|
 | ![TerrainData_Image](Screenshots/TerrainData_Image.png) | ![TerrainData_HeightMap](Screenshots/TerrainData_HeightMap.png) | ![TerrainData_WaterMask](Screenshots/TerrainData_WaterMask.png)|
