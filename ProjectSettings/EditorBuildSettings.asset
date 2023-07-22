@@ -4,7 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Observer Mode.unity
+    guid: 50eb4c08ad7654f42a6ceacb971366b7
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 709ed5f3dba03cc4b860bec0426e4444, type: 2}
     com.unity.localization.settings: {fileID: 11400000, guid: 247a2778b7bf1e7469e0c34a90592ec9, type: 2}
